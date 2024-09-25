@@ -1,0 +1,43 @@
+@model List<ListApp.Models.Item>
+
+<h1>Asjade list</h1>
+
+<form asp-action="AddItem" method="post">
+    <label for="name">Asja nimi:</label>
+    <input type="text" id="name" name="name" required />
+    <label for="quantity">Kogus:</label>
+    <input type="number" id="quantity" name="quantity" required min="1" />
+    <button type="submit">Lisa asi</button>
+</form>
+
+<form method="get" asp-action="Index">
+    <input type="text" name="search" placeholder="Otsi..." value="@ViewData["SearchTerm"]" />
+    <button type="submit">Otsi</button>
+</form>
+
+<table style="width: 100%; border-spacing: 5px;">
+    <thead>
+        <tr>
+            <th style="padding-right: 5px;">ID</th>
+            <th style="padding-right: 5px;">Nimi</th>
+            <th style="padding-right: 5px;">Kogus</th>
+            <th style="padding-right: 5px;">Kustuta</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="padding-right: 5px;">@item.Id</td>
+                <td style="padding-right: 5px;">@item.Name</td>
+                <td style="padding-right: 5px;">@item.Quantity</td>
+                <td style="padding-right: 5px;">
+                    <form asp-action="DeleteItem" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit">X</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
